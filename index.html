@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Viinitorni1</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+    <!-- we import arjs version without NFT but with marker + location based support -->
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+    <script src="./assets/gesture-detector.js"></script>
+    <script src="./assets/gesture-handler.js"></script>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body style="margin: 0px; overflow: hidden">
+
+    <!-- <div class="container fixed-top">
+      <div class="col-6">
+        <button class="btn btn-info hint-btn btn-lg">
+          ?
+          <span class="spinner-border spinner-border-sm loadingCheck"></span>
+        </button>
+
+        <img class="row hint-img d-none" src="./viinitorni_ohje(suurempi).gif" alt="">
+      </div>
+    </div> -->
+
+    <a-scene
+      id="scene"
+      embedded
+      arjs
+      renderer="logarithmicDepthBuffer: true;"
+      vr-mode-ui="enabled: false"
+      gesture-detector
+      
+    >
+      <a-marker
+        url="./marker.png"
+        smooth
+        raycaster="objects: .clickable"
+        emitevents="true"
+        cursor="fuse: false; rayOrigin: mouse;"
+        id="markerA"
+      >
+        <a-entity
+          class="clickable"
+          rotation="0 90 0"
+          position="0 0 0"
+          scale="1 1 1"
+          gltf-model="./suomi_kp-31-ville.glb"
+          gesture-handler
+          follow="#markerA"
+        ></a-entity>
+      </a-marker>
+      <a-entity camera></a-entity>
+    </a-scene>
+
+    <script>
+      const hintBtn =  document.querySelector(".hint-btn")
+      hintBtn.addEventListener("click", () => {
+        const hintImg = document.querySelector(".hint-img")
+        hintImg.classList.toggle("d-none")
+      })
+
+      const loads = document.querySelector(".clickable")
+      loads.addEventListener("model-loaded", () => {
+        const loadingCheck = document.querySelector(".loadingCheck")
+        loadingCheck.classList.toggle("d-none")
+      })
+    </script>
+  </body>
+</html>
