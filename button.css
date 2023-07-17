@@ -1,0 +1,33 @@
+.hint-btn {
+    /* Customize button appearance */
+    padding: 10px;
+    background-color: green;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .hint-btn:hover {
+    background-color:rgb(12, 52, 12);
+  }
+  
+  .hint-img {
+    /* Customize image appearance */
+    max-width: 100%;
+    display: block;
+    margin-top: 10px; /* Adjust the margin as needed */
+  }
+  
+
+.loadingCheck {
+    display: inline-block;
+  }
+  
+  .loading-text {
+    margin-left: 10px; /* Adjust the margin as needed */
+    opacity: 1;
+    transition: opacity 0.3s ease;
+  }
+
+  
