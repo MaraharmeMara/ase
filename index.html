@@ -17,7 +17,6 @@
     />
   </head>
   <body style="margin: 0px; overflow: hidden">
-
     <div class="container fixed-top">
       <div class="col-6">
         <button class="btn btn-info hint-btn btn-lg">
@@ -25,7 +24,11 @@
           <span class="spinner-border spinner-border-sm loadingCheck"></span>
         </button>
 
-        <img class="row hint-img d-none" src="./viinitorni_ohje(suurempi).gif" alt="">
+        <img
+          class="row hint-img d-none"
+          src="./viinitorni_ohje(suurempi).gif"
+          alt=""
+        />
       </div>
     </div>
 
@@ -36,7 +39,6 @@
       renderer="logarithmicDepthBuffer: true;"
       vr-mode-ui="enabled: false"
       gesture-detector
-      
     >
       <a-marker
         marker="hiro"
@@ -50,7 +52,7 @@
           class="clickable"
           rotation="0 90 0"
           position="0 0 0"
-          scale="1 1 1"
+          scale="0.1 0.1 0.1"
           gltf-model="./suomi_kp-31-ville.glb"
           gesture-handler
           follow="#markerA"
@@ -60,17 +62,17 @@
     </a-scene>
 
     <script>
-      const hintBtn =  document.querySelector(".hint-btn")
+      const hintBtn = document.querySelector(".hint-btn");
       hintBtn.addEventListener("click", () => {
-        const hintImg = document.querySelector(".hint-img")
-        hintImg.classList.toggle("d-none")
-      })
+        const hintImg = document.querySelector(".hint-img");
+        hintImg.classList.toggle("d-none");
+      });
 
-      const loads = document.querySelector(".clickable")
+      const loads = document.querySelector(".clickable");
       loads.addEventListener("model-loaded", () => {
-        const loadingCheck = document.querySelector(".loadingCheck")
-        loadingCheck.classList.toggle("d-none")
-      })
+        const loadingCheck = document.querySelector(".loadingCheck");
+        loadingCheck.classList.toggle("d-none");
+      });
     </script>
   </body>
 </html>
