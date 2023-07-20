@@ -53,9 +53,10 @@
           rotation="0 90 0"
           position="0 0 0"
           scale="0.1 0.1 0.1"
-          gltf-model="./suomi_kp-31-ville.glb"
+          gltf-model="./untitled.glb"
           gesture-handler
           follow="#markerA"
+          visible="false"
         ></a-entity>
       </a-marker>
       <a-entity camera></a-entity>
@@ -73,6 +74,26 @@
         const loadingCheck = document.querySelector(".loadingCheck");
         loadingCheck.classList.toggle("d-none");
       });
+        /* model on a place for some time */
+      window.addEventListener('load', function() {
+      var modelEntity = document.querySelector('.clickable');
+
+      // Delay in milliseconds before the model disappears (e.g., 5000ms = 5 seconds)
+      var delayBeforeDisappear = 5000;
+
+     function showModel() {
+       modelEntity.setAttribute('visible', 'true');
+      setTimeout(hideModel, delayBeforeDisappear);
+      }
+
+     function hideModel() {
+      modelEntity.setAttribute('visible', 'false');
+      }
+
+      // Listen for the marker-found event to show the model when the marker is detected
+      document.querySelector('a-marker').addEventListener('markerFound', showModel);
+      });
+
     </script>
   </body>
 </html>
