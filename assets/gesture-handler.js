@@ -21,7 +21,7 @@ AFRAME.registerComponent("gesture-handler", {
     });
 
     this.el.sceneEl.addEventListener("markerLost", (e) => {
-      this.isVisible = false;
+        this.isVisible = false;
     });
   },
 
