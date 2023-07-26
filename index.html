@@ -151,6 +151,29 @@
   });
 });
 
+<script>
+  AFRAME.registerComponent('arjs-tracking', {
+    init: function () {
+      const sceneEl = this.el;
+      const markerEl = sceneEl.querySelector('#markerA');
+
+      ARController.getUserMediaThreeScene({
+        maxARVideoSize: 640,
+        facing: 'environment',
+      }).then(function (arScene) {
+        arScene.init(function onReady() {
+          sceneEl.object3D.add(arScene.canvas);
+        });
+        arScene.setPatternDetectionMode(artoolkit.AR_MATRIX_CODE_DETECTION);
+        arScene.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_3x3);
+        arScene.setPattRatio(0.8);
+        arScene.setMatrixCodeType(artoolkit.AR_MATRIX_CODE_3x3);
+        arScene.start();
+      });
+    }
+  });
+</script>
+
     </script>
   </body>
 </html>
