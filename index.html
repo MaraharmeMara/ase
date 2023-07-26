@@ -150,9 +150,9 @@
     window.removeEventListener('deviceorientation', onDeviceOrientationChange);
   });
 });
-
-<script>
-  AFRAME.registerComponent('arjs-tracking', {
+</script>
+ <script>
+  AFRAME.registerComponent('arjs-tracking',  {
     init: function () {
       const sceneEl = this.el;
       const markerEl = sceneEl.querySelector('#markerA');
@@ -172,8 +172,6 @@
       });
     }
   });
-</script>
-
-    </script>
+ </script>
   </body>
 </html>
