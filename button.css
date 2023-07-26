@@ -1,4 +1,4 @@
-.hint-btn {
+.btn {
     /* Customize button appearance */
     padding: 10px;
     background-color: green;
@@ -8,7 +8,7 @@
     transition: background-color 0.3s ease;
   }
   
-  .hint-btn:hover {
+  .btn:hover {
     background-color:rgb(12, 52, 12);
   }
   
