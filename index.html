@@ -3,18 +3,28 @@
   <head>
     <meta charset="UTF-8" />
     <title>Ase</title>
-    <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-    <!-- we import arjs version without NFT but with marker + location based support -->
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+
+    <script
+      src="https://unpkg.com/html5-qrcode"
+      type="text/javascript"
+    ></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script src="./assets/gesture-detector.js"></script>
     <script src="./assets/gesture-handler.js"></script>
-
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
       integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
       crossorigin="anonymous"
     />
+    <style>
+      .scn {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 100000;
+      }
+    </style>
   </head>
   <body style="margin: 0px; overflow: hidden">
     <div class="container fixed-top">
@@ -31,52 +41,38 @@
         />
       </div>
     </div>
-
-    <a-scene
-      id="scene"
-      embedded
-      arjs="sourceType: webcam; debugUIEnabled: false;"
-      renderer="logarithmicDepthBuffer: true;"
-      vr-mode-ui="enabled: false"
-      gesture-detector
-    >
-      <a-marker-camera
-        marker="hiro"
-        smooth="true"
-        smooth-tolerance="1"
-        smooth-threshol="10"
-        raycaster="objects: .clickable"
-        emitevents="true"
-        cursor="fuse: false; rayOrigin: mouse;"
-        id="markerA"
+    <div id="reader"></div>
+    <div class="scn">
+      <a-scene
+        id="scene"
+        renderer="logarithmicDepthBuffer: true;"
+        vr-mode-ui="enabled: false"
+        gesture-detector
+        embedded
       >
         <a-entity
           class="clickable"
           rotation="0 90 0"
-          position="0 0 0"
+          position="0 1 -6"
           scale="0.1 0.1 0.1"
           gltf-model="./gun.glb"
           gesture-handler
-          follow="#markerA"
           visible="true"
         ></a-entity>
-      </a-marker>
-      <!-- <a-entity camera></a-entity> -->
-            <!-- Ambient Light -->
-      <a-light
-        type="ambient"
-        color="#ffffff"
-        intensity="0.8"
-      ></a-light>
+        <a-camera></a-camera>
 
-      <!-- Directional Light -->
-      <a-light
-        type="directional"
-        color="#ffffff"
-        intensity="0.8"
-        position="2 4 -3"
-      ></a-light>
+        <!-- <a-entity camera></a-entity> -->
+        <!-- Ambient Light -->
+        <a-light type="ambient" color="#ffffff" intensity="0.8"></a-light>
+        <!-- Directional Light -->
+        <a-light
+          type="directional"
+          color="#ffffff"
+          intensity="0.8"
+          position="2 4 -3"
+        ></a-light>
       </a-scene>
+    </div>
 
     <script>
       const hintBtn = document.querySelector(".hint-btn");
@@ -87,9 +83,35 @@
 
       const loads = document.querySelector(".clickable");
       loads.addEventListener("model-loaded", () => {
+        //
         const loadingCheck = document.querySelector(".loadingCheck");
         loadingCheck.classList.toggle("d-none");
       });
+
+      let currentModel = "";
+      function onScanSuccess(decodedText, decodedResult) {
+        if (decodedText === currentModel) {
+          return;
+        }
+        currentModel = decodedText;
+        alert(`Code matched = ${decodedText}`);
+      }
+
+      function onScanFailure(error) {
+        // handle scan failure, usually better to ignore and keep scanning.
+        // for example:
+        // console.warn(`Code scan error = ${error}`);
+      }
+
+      const html5QrCode = new Html5Qrcode("reader", {
+        formatsToSupport: [Html5QrcodeSupportedFormats.QR_CODE],
+      });
+      html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10 },
+        onScanSuccess,
+        onScanFailure
+      );
 
       //
       //     /* model on a place for some time */
@@ -111,45 +133,57 @@
       //   // Listen for the marker-found event to show the model when the marker is detected
       //   document.querySelector('a-marker').addEventListener('markerFound', showModel);
       //   });
-      window.addEventListener('load', function() {
-  var modelEntity = document.querySelector('.clickable');
-  var marker = document.querySelector('#markerA');
-  
-  var deviceOrientation = null;
-  var modelQuaternion = new THREE.Quaternion();
+      // window.addEventListener("load", function () {
+      //   var modelEntity = document.querySelector(".clickable");
+      //   var marker = document.querySelector("#markerA");
 
-  function updateModelPosition() {
-    if (deviceOrientation) {
-      var quaternion = new THREE.Quaternion(
-        deviceOrientation.x,
-        deviceOrientation.y,
-        deviceOrientation.z,
-        deviceOrientation.w
-      );
-      modelQuaternion.multiplyQuaternions(quaternion, modelQuaternion);
-      modelEntity.setAttribute('rotation', modelQuaternion.toEuler().toVector3());
-    }
-    requestAnimationFrame(updateModelPosition);
-  }
+      //   var deviceOrientation = null;
+      //   var modelQuaternion = new THREE.Quaternion();
 
-  function onDeviceOrientationChange(event) {
-    deviceOrientation = event.detail;
-  }
+      //   function updateModelPosition() {
+      //     if (deviceOrientation) {
+      //       var quaternion = new THREE.Quaternion(
+      //         deviceOrientation.x,
+      //         deviceOrientation.y,
+      //         deviceOrientation.z,
+      //         deviceOrientation.w
+      //       );
+      //       modelQuaternion.multiplyQuaternions(quaternion, modelQuaternion);
+      //       modelEntity.setAttribute(
+      //         "rotation",
+      //         modelQuaternion.toEuler().toVector3()
+      //       );
+      //     }
+      //     requestAnimationFrame(updateModelPosition);
+      //   }
 
-  // Listen for the marker-found event to show the model when the marker is detected
-  document.querySelector('a-marker').addEventListener('markerFound', function() {
-    modelEntity.setAttribute('visible', 'true');
-    window.addEventListener('deviceorientation', onDeviceOrientationChange);
-    updateModelPosition();
-  });
+      //   function onDeviceOrientationChange(event) {
+      //     deviceOrientation = event.detail;
+      //   }
 
-  // Listen for the marker-lost event to hide the model when the marker is not detected
-  document.querySelector('a-marker').addEventListener('markerLost', function() {
-    modelEntity.setAttribute('visible', 'false');
-    window.removeEventListener('deviceorientation', onDeviceOrientationChange);
-  });
-});
+      //   // Listen for the marker-found event to show the model when the marker is detected
+      //   document
+      //     .querySelector("a-marker")
+      //     .addEventListener("markerFound", function () {
+      //       modelEntity.setAttribute("visible", "true");
+      //       window.addEventListener(
+      //         "deviceorientation",
+      //         onDeviceOrientationChange
+      //       );
+      //       updateModelPosition();
+      //     });
 
+      //   // Listen for the marker-lost event to hide the model when the marker is not detected
+      //   document
+      //     .querySelector("a-marker")
+      //     .addEventListener("markerLost", function () {
+      //       modelEntity.setAttribute("visible", "false");
+      //       window.removeEventListener(
+      //         "deviceorientation",
+      //         onDeviceOrientationChange
+      //       );
+      //     });
+      // });
     </script>
   </body>
 </html>
