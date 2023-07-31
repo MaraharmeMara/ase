@@ -1,75 +1,112 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Viinitorni1</title>
-    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
-    <!-- we import arjs version without NFT but with marker + location based support -->
-    <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
-    <script src="./assets/gesture-detector.js"></script>
-    <script src="./assets/gesture-handler.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <title>test2</title>
+  <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar.js"></script>
+  <script src="./assets/gesture-detector.js"></script>
+  <script src="./assets/gesture-handler.js"></script>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-      crossorigin="anonymous"
-    />
-  </head>
-  <body style="margin: 0px; overflow: hidden">
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+    crossorigin="anonymous"
+  />
+</head>
+<body style="margin: 0px; overflow: hidden">
 
-    <div class="container fixed-top">
-      <div class="col-6">
-        <button class="btn btn-info hint-btn btn-lg">
-          ?
-          <span class="spinner-border spinner-border-sm loadingCheck"></span>
-        </button>
+  <div class="container fixed-top">
+    <div class="col-6">
+      <button class="btn btn-info hint-btn btn-lg">
+        ?
+        <span class="spinner-border spinner-border-sm loadingCheck"></span>
+      </button>
 
-        <img class="row hint-img d-none" src="./viinitorni_ohje(suurempi).gif" alt="">
-      </div>
+      <img class="row hint-img d-none" src="./viinitorni_ohje(suurempi).gif" alt="">
     </div>
+  </div>
 
-    <a-scene
-      id="scene"
-      embedded
-      arjs
-      renderer="logarithmicDepthBuffer: true;"
-      vr-mode-ui="enabled: false"
-      gesture-detector
-      
-    >
-      <a-marker
-        preset="hiro"
-        smooth
-        raycaster="objects: .clickable"
-        emitevents="true"
-        cursor="fuse: false; rayOrigin: mouse;"
-        id="markerA"
-      >
-        <a-entity
-          class="clickable"
-          rotation="0 90 0"
-          position="0 0 0"
-          scale="1 1 1"
-          gltf-model="./gun.glb"
-          gesture-handler
-        ></a-entity>
-      </a-marker>
-      <a-entity camera></a-entity>
-    </a-scene>
+  <a-scene
+    id="scene"
+    embedded
+    arjs
+    renderer="logarithmicDepthBuffer: true;"
+    vr-mode-ui="enabled: false"
+    gesture-detector
+  >
+    <a-entity
+      class="clickable"
+      rotation="0 90 0"
+      position="0 0 0"
+      scale="1 1 1"
+      gltf-model="./gun.glb"
+      gesture-handler
+    ></a-entity>
+    <a-entity camera></a-entity>
+  </a-scene>
 
-    <script>
-      const hintBtn =  document.querySelector(".hint-btn")
-      hintBtn.addEventListener("click", () => {
-        const hintImg = document.querySelector(".hint-img")
-        hintImg.classList.toggle("d-none")
-      })
+  <script>
+    const hintBtn = document.querySelector(".hint-btn");
+    const hintImg = document.querySelector(".hint-img");
+    const loadingCheck = document.querySelector(".loadingCheck");
 
-      const loads = document.querySelector(".clickable")
-      loads.addEventListener("model-loaded", () => {
-        const loadingCheck = document.querySelector(".loadingCheck")
-        loadingCheck.classList.toggle("d-none")
-      })
-    </script>
-  </body>
+    hintBtn.addEventListener("click", () => {
+      hintImg.classList.toggle("d-none");
+    });
+
+    const modelEntity = document.querySelector(".clickable");
+
+    modelEntity.addEventListener("model-loaded", () => {
+      loadingCheck.classList.add("d-none");
+    });
+
+    // Function to close the 3D model when the close button is clicked
+    function closeModel() {
+      // Hide the model entity
+      modelEntity.setAttribute("visible", false);
+    }
+
+    // Function to display the 3D model when a QR code is scanned
+    function showModel(href="https://skfb.ly/oyRXT") {
+      // Update the model URL
+      modelEntity.setAttribute("gltf-model", modelUrl);
+      // Show the model entity
+      modelEntity.setAttribute("visible", true);
+      // Reset the position and rotation of the model entity (if needed)
+      modelEntity.setAttribute("position", "0 0 0");
+      modelEntity.setAttribute("rotation", "0 90 0");
+    }
+
+    // Event listener for QR code scanning
+    const qrScanner = new Instascan.Scanner({ video: document.getElementById('qr-video') });
+    qrScanner.addListener('scan', (content) => {
+      // 'content' will contain the data from the scanned QR code
+      // Use this data to determine which 3D model to display
+      const modelUrl = <div class="sketchfab-embed-wrapper"> <iframe title="Grumpy The Goat" frameborder="0" allowfullscreen mozallowfullscreen="true" webkitallowfullscreen="true" allow="autoplay; fullscreen; xr-spatial-tracking" xr-spatial-tracking execution-while-out-of-viewport execution-while-not-rendered web-share src="https://sketchfab.com/models/e380d6b05b59433d882fbe414d7811b4/embed"> </iframe> <p style="font-size: 13px; font-weight: normal; margin: 5px; color: #4A4A4A;"> <a href="https://sketchfab.com/3d-models/grumpy-the-goat-e380d6b05b59433d882fbe414d7811b4?utm_medium=embed&utm_campaign=share-popup&utm_content=e380d6b05b59433d882fbe414d7811b4" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Grumpy The Goat </a> by <a href="https://sketchfab.com/maraharme?utm_medium=embed&utm_campaign=share-popup&utm_content=e380d6b05b59433d882fbe414d7811b4" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;"> Maraharme </a> on <a href="https://sketchfab.com?utm_medium=embed&utm_campaign=share-popup&utm_content=e380d6b05b59433d882fbe414d7811b4" target="_blank" rel="nofollow" style="font-weight: bold; color: #1CAAD9;">Sketchfab</a></p></div>;
+      if (modelUrl) {
+        closeModel();
+        showModel(modelUrl);
+      }
+    });
+
+    // Start the QR code scanner when the video is ready
+    Instascan.Camera.getCameras().then(function (cameras) {
+      if (cameras.length > 0) {
+        qrScanner.start(cameras[0]);
+      } else {
+        console.error('No cameras found.');
+      }
+    });
+
+    // Function to map content to corresponding model URLs
+    function getContentBasedModelURL(href="https://skfb.ly/oyRXT") {
+      // Implement your logic to map content to model URLs here
+      // For example, you can use a switch case or an object mapping
+      // to return the appropriate model URL based on the content scanned.
+      // Return null if no model URL is found for the given content.
+    }
+  </script>
+</body>
 </html>
