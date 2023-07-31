@@ -23,6 +23,8 @@
         top: 0;
         left: 0;
         z-index: 100000;
+        width: 100vw;
+        height: 100vh;
       }
     </style>
   </head>
@@ -58,6 +60,12 @@
           gltf-model="./gun.glb"
           gesture-handler
           visible="true"
+        ></a-entity>
+        <a-entity
+          rotation="0 90 0"
+          position="0 1 -6"
+          scale="1 1 1"
+          gltf-model="./goat.glb"
         ></a-entity>
         <a-camera></a-camera>
 
