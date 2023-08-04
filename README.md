@@ -1,9 +1,9 @@
-![qr](./qr-code.png)
+![qr](./qrcodes/qr-code.png)
 
 ### goat
 
-![qr](./goat.png)
+![qr](./qrcodes/1.png)
 
 ### gun
 
-![qr](./gun.png)
+![qr](./qrcodes/2.png)

@@ -101,6 +101,9 @@
         }
         currentModel = decodedText;
         const qr = new URL(currentModel).searchParams.get("qr");
+        if (qr === "") {
+          return;
+        }
         loads.setAttribute("gltf-model", `./models/${qr}.glb`);
       }
 
