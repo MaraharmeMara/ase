@@ -1,15 +1,34 @@
 NodeJS
 Require the module qrcode
+var QRCode = require('qrcode');
+var fs = require('fs');
+var path = require('path');
 
-var QRCode = require('qrcode')
+// Source and destination folder paths
+const sourceFolderPath = './models';
+const destinationFolderPath = './qrcodes';
 
-QRCode.toDataURL('I am a pony!', function (err, url) {
-  console.log(url)
-})
-render a qrcode for the terminal
+// Read the files from the source folder
+fs.readdir(sourceFolderPath, function (err, files) {
+  if (err) {
+    console.error('Error reading files from the source folder:', err);
+    return;
+  }
 
-var QRCode = require('qrcode')
+  // Loop through the files
+  files.forEach(function (file) {
+    // Create the full file paths
+    var sourceFilePath = path.join(sourceFolderPath, file);
+    var destinationFilePath = path.join(destinationFolderPath, `${file}.png`);
 
-QRCode.toString('I am a pony!',{type:'terminal'}, function (err, url) {
-  console.log(url)
-})
+    // Generate QR code from the 3D model filename
+    QRCode.toFile(destinationFilePath, file, function (err) {
+      if (err) {
+        console.error('Error generating QR code:', err);
+        return;
+      }
+
+      console.log(`QR code generated for ${file}`);
+    });
+  });
+});
