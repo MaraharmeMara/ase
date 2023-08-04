@@ -1,5 +1,4 @@
-NodeJS
-Require the module qrcode
+
 var QRCode = require('qrcode');
 var fs = require('fs');
 var path = require('path');
