@@ -10,6 +10,6 @@ render a qrcode for the terminal
 
 var QRCode = require('qrcode')
 
-QRCode.toString('./AR-web/models',{type:'terminal'}, function (err, url) {
+QRCode.toString('I am a pony!',{type:'terminal'}, function (err, url) {
   console.log(url)
 })
