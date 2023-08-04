@@ -36,11 +36,7 @@
           <span class="spinner-border spinner-border-sm loadingCheck"></span>
         </button>
 
-        <img
-          class="row hint-img d-none"
-          src="./viinitorni_ohje(suurempi).gif"
-          alt=""
-        />
+        <img class="row hint-img d-none" src="./assets/help.gif" alt="" />
       </div>
     </div>
     <div id="reader"></div>
@@ -59,7 +55,7 @@
           rotation="0 90 0"
           position="0 1 -6"
           scale="0.1 0.1 0.1"
-          gltf-model="./1.glb"
+          gltf-model="./models/1.glb"
           gesture-handler
           visible="true"
         ></a-entity>
@@ -105,7 +101,7 @@
         }
         currentModel = decodedText;
         const qr = new URL(currentModel).searchParams.get("qr");
-        loads.setAttribute("gltf-model", `/${qr}.glb`);
+        loads.setAttribute("gltf-model", `./models/${qr}.glb`);
       }
 
       function onScanFailure(error) {
