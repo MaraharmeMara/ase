@@ -23,7 +23,7 @@ fs.readdir(sourceFolderPath, function (err, files) {
     const destinationFilePath = path.join(destinationFolderPath, `${file}.png`);
 
     // Generate QR code from the 3D model filename
-    QRCode.toFile(destinationFilePath, qrcode, function (err) {
+    QRCode.toFile(destinationFilePath, qrcode, { scale: 25 }, function (err) {
       if (err) {
         console.error('Error generating QR code:', err);
         return;
