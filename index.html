@@ -29,6 +29,14 @@
     </style>
   </head>
   <body style="margin: 0px; overflow: hidden">
+    <div class="container fixed-top">
+      <img class="row hint-img d-none" src="./assets/help.gif" alt="" />
+      <div class="col-6">
+        <button class="btn btn-info hint-btn btn-lg">
+          ?
+          <span class="spinner-border spinner-border-sm loadingCheck"></span>
+        </button>
+      </div>
     </div>
     <div id="reader"></div>
     <div class="scn">
@@ -68,12 +76,7 @@
           intensity="0.8"
           position="2 4 -3"
         ></a-light>
-        <sky-light
-        type="ambient"
-        color="#ffffff"
-        intensity="1"
-        >
-        </sky-light>
+        <sky-light type="ambient" color="#ffffff" intensity="1"> </sky-light>
       </a-scene>
     </div>
 
