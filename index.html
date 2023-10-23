@@ -115,6 +115,10 @@
         loadingCheck.classList.toggle("d-none");
       });
 
+      const urlParams = new URLSearchParams(window.location.search);
+      const qrnumber = urlParams.get("qr");
+      loads.setAttribute("gltf-model", `./models/${qrnumber}.glb`);
+
       let currentModel = "";
       function onScanSuccess(decodedText, decodedResult) {
         if (decodedText === currentModel) {
