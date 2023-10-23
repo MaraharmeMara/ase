@@ -6,7 +6,7 @@ const path = require('path');
 // Source and destination folder paths
 const sourceFolderPath = './models';
 const destinationFolderPath = './qrcodes';
-const prefix = "https://stctuotanto.fi/360vr/ase/?qr="
+const prefix = "https://stctuotanto.fi/360vr/AR-web/?qr="
 
 // Read the files from the source folder
 fs.readdir(sourceFolderPath, function (err, files) {
