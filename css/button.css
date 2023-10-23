@@ -30,4 +30,9 @@
     transition: opacity 0.3s ease;
   }
 
-  
+  .toggleBackgroundButton {
+    color: white;
+    background-color: royalblue;
+    border-radius: 5%;
+    margin-bottom: auto;
+  }

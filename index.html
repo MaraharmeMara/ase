@@ -2,15 +2,18 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AR</title>
 
     <script
       src="https://unpkg.com/html5-qrcode"
       type="text/javascript"
     ></script>
-    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>    
+    <script src="https://cdn.rawgit.com/jeromeetienne/AR.js/2.2.5/aframe/build/aframe-ar.js"></script>
     <script src="./assets/gesture-detector.js"></script>
     <script src="./assets/gesture-handler.js"></script>
+
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
@@ -29,11 +32,15 @@
     </style>
   </head>
   <body style="margin: 0px; overflow: hidden">
+    <a-scene embedded arjs="sourceType: webcam; detectionMode: mono_and_matrix;">
+      <!-- Ground detection entity -->
+      <a-plane position="0 0 0" rotation="90 0 0" width="10" height="10" color="#00ff00"></a-plane>
+
     <div class="container fixed-top">
       <img class="row hint-img d-none" src="./assets/help.gif" alt="" />
       <div class="col-6">
         <button class="btn btn-info hint-btn btn-lg">
-          ?
+          
           <span class="spinner-border spinner-border-sm loadingCheck"></span>
         </button>
       </div>
@@ -78,6 +85,18 @@
         ></a-light>
         <sky-light type="ambient" color="#ffffff" intensity="1"> </sky-light>
       </a-scene>
+      <a-scene id="combinedScene" vr-mode-ui="enabled: false">
+        <!-- Common 3D content goes here -->
+        <a-entity
+          id="common3DObject"
+          gltf-model="./models/1.glb"
+          position="0 1 -6"
+          scale="0.1 0.1 0.1"
+          visible="true"
+        ></a-entity>
+      </a-scene>
+      <button id="toggleBackgroundButton">Background</button>
+
     </div>
 
     <script>
@@ -127,6 +146,30 @@
       } catch (e) {
         alert(e);
       }
+      const toggleBackgroundButton = document.getElementById('toggleBackgroundButton');
+const combinedScene = document.getElementById('combinedScene');
+const common3DObject = document.getElementById('common3DObject');
+
+toggleBackgroundButton.addEventListener('click', function () {
+  if (combinedScene.getAttribute('environment') === 'preset: forest') {
+    combinedScene.setAttribute('environment', 'preset: default');
+  } else {
+    combinedScene.setAttribute('environment', 'preset: forest');
+  }
+});
+
+// Function to toggle the visibility of the 3D object
+function toggle3DObject() {
+  if (common3DObject.getAttribute('visible')) {
+    common3DObject.setAttribute('visible', false);
+  } else {
+    common3DObject.setAttribute('visible', true);
+  }
+}
+
+// Call the toggle3DObject function to initially hide the 3D object
+toggle3DObject();
+
     </script>
   </body>
 </html>
